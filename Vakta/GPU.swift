@@ -13,10 +13,8 @@ class GPU {
     init(){
         connect()
     }
-
-    private var _connect: io_connect_t = IO_OBJECT_NULL;
-    public var currentGPU: String?
     
+    private var _connection: io_connect_t = IO_OBJECT_NULL;    
     
     func connect() {
         var kernResult: kern_return_t = 0
@@ -37,13 +35,13 @@ class GPU {
             return
         }
         
-        kernResult = IOServiceOpen(service, mach_task_self_, 0, &self._connect);
+        kernResult = IOServiceOpen(service, mach_task_self_, 0, &self._connection);
         if kernResult != KERN_SUCCESS {
             print("IOServiceOpen returned \(kernResult)");
             return
         }
         
-        kernResult = IOConnectCallScalarMethod(self._connect, UInt32(DispatchSelectors.kOpen.rawValue), nil, 0, nil, nil);
+        kernResult = IOConnectCallScalarMethod(self._connection, UInt32(DispatchSelectors.kOpen.rawValue), nil, 0, nil, nil);
         if kernResult != KERN_SUCCESS {
             print("IOConnectCallScalarMethod returned \(kernResult)")
             return
@@ -53,24 +51,22 @@ class GPU {
     }
     
     func IsUsingIntegrated() -> Bool {
-        if self._connect == IO_OBJECT_NULL {
+        if self._connection == IO_OBJECT_NULL {
             print("Lost connection to gpu")
             return false
         }
         
-        let gpu_int = GPU_INT(rawValue: Int(getGPUState(connect: self._connect, input: GPUState.GraphicsCard)))
+        let gpu_int = GPU_INT(rawValue: Int(getGPUState(connect: self._connection, input: GPUState.GraphicsCard)))
         
-      //  NotificationCenter.default.post(name: Notification.Name("checkGPUState"), object: gpu_int)
         return gpu_int == .Integrated
     }
     
     private func getGPUState(connect: io_connect_t, input: GPUState) -> UInt64 {
-        var kernResult: kern_return_t = 0
         let scalar: [UInt64] = [ 1, UInt64(input.rawValue) ];
         var output: UInt64 = 0
         var outputCount: UInt32 = 1
         
-        kernResult = IOConnectCallScalarMethod(
+        IOConnectCallScalarMethod(
             // an io_connect_t returned from IOServiceOpen().
             connect,
             
@@ -89,20 +85,6 @@ class GPU {
             // pointer to the number of scalar output values.
             &outputCount
         );
-        
-        var successMessage = "GET: count \(outputCount), value \(output)"
-        
-        if(input == .GraphicsCard) {
-            let gpu_int = GPU_INT(rawValue: Int(output))!
-            successMessage += " (\(gpu_int))"
-        }
-        
-        if kernResult == KERN_SUCCESS {
-         //   print(successMessage)
-        }
-        else {
-            print("Get state returned \(kernResult)")
-        }
         
         return output
     }
