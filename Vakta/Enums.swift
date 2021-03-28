@@ -24,6 +24,7 @@ enum GPUType: Int {
     case
         Discrete = 0,
         Integrated,
+        Unchanged,
         Error
 }
 

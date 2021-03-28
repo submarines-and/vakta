@@ -7,10 +7,15 @@
 
 import Cocoa
 
-func coregraphicsReconfiguration(display:CGDirectDisplayID, flags:CGDisplayChangeSummaryFlags, userInfo:UnsafeMutableRawPointer?) -> Void
+func onGraphicSwitch(display:CGDirectDisplayID, flags:CGDisplayChangeSummaryFlags, userInfo:UnsafeMutableRawPointer?) -> Void
 {
     sleep(1)
     let usedGpu = GPU.global.GetActiveGPU()
+    
+    if(usedGpu == GPUType.Unchanged){
+        print("Card not changed");
+        return
+    }
     
     var message = ""
     switch usedGpu {
@@ -31,7 +36,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {        
-        CGDisplayRegisterReconfigurationCallback(coregraphicsReconfiguration, nil)
+        CGDisplayRegisterReconfigurationCallback(onGraphicSwitch, nil)
         
         if let button = self.statusItem.button {
             button.title = "V"

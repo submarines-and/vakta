@@ -11,12 +11,10 @@ class GPU {
     static var global = GPU()
     init(){
         connect();
-        _previous = GetActiveGPU()
     }
     
     private var _connection: io_connect_t = IO_OBJECT_NULL;
-    private var _previous: GPUType = GPUType.Error;
-    
+    private var _previous: GPUType = GPUType.Unchanged;
     
     func connect() {
         var kernResult: kern_return_t = 0
@@ -49,6 +47,12 @@ class GPU {
     
     func GetActiveGPU() -> GPUType {
         let type = GPUType(rawValue: Int(getGPUState(connect: self._connection, input: GPUState.GraphicsCard))) ?? GPUType.Error
+        
+        if(_previous == type){
+            return GPUType.Unchanged;
+        }
+        
+        _previous = type;
         return type
     }
     
