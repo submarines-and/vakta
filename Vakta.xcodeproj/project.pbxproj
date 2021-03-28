@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9C2A0FDA2610D2CD00C2A87D /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C2A0FD92610D2CD00C2A87D /* Enums.swift */; };
+		9C2A0FDD2610D2DF00C2A87D /* GPU.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C2A0FDC2610D2DF00C2A87D /* GPU.swift */; };
 		9CF53203261093C50040A675 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF53202261093C50040A675 /* AppDelegate.swift */; };
 		9CF53205261093C50040A675 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF53204261093C50040A675 /* ViewController.swift */; };
 		9CF53207261093C60040A675 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9CF53206261093C60040A675 /* Assets.xcassets */; };
@@ -14,6 +16,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9C2A0FD72610945F00C2A87D /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../vakta/README.md; sourceTree = "<group>"; };
+		9C2A0FD92610D2CD00C2A87D /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Enums.swift; path = ../../vakta/Vakta/Enums.swift; sourceTree = "<group>"; };
+		9C2A0FDC2610D2DF00C2A87D /* GPU.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GPU.swift; path = ../../vakta/Vakta/GPU.swift; sourceTree = "<group>"; };
 		9CF531FF261093C50040A675 /* Vakta.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Vakta.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CF53202261093C50040A675 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9CF53204261093C50040A675 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -37,6 +42,7 @@
 		9CF531F6261093C50040A675 = {
 			isa = PBXGroup;
 			children = (
+				9C2A0FD72610945F00C2A87D /* README.md */,
 				9CF53201261093C50040A675 /* Vakta */,
 				9CF53200261093C50040A675 /* Products */,
 			);
@@ -59,6 +65,8 @@
 				9CF53208261093C60040A675 /* Main.storyboard */,
 				9CF5320B261093C60040A675 /* Info.plist */,
 				9CF5320C261093C60040A675 /* Vakta.entitlements */,
+				9C2A0FD92610D2CD00C2A87D /* Enums.swift */,
+				9C2A0FDC2610D2DF00C2A87D /* GPU.swift */,
 			);
 			path = Vakta;
 			sourceTree = "<group>";
@@ -132,7 +140,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9C2A0FDD2610D2DF00C2A87D /* GPU.swift in Sources */,
 				9CF53205261093C50040A675 /* ViewController.swift in Sources */,
+				9C2A0FDA2610D2CD00C2A87D /* Enums.swift in Sources */,
 				9CF53203261093C50040A675 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -279,7 +289,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.submarines.Vakta;
+				PRODUCT_BUNDLE_IDENTIFIER = com.submarines.vakta;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 			};
@@ -298,7 +308,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.submarines.Vakta;
+				PRODUCT_BUNDLE_IDENTIFIER = com.submarines.vakta;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 			};

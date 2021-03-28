@@ -7,20 +7,25 @@
 
 import Cocoa
 
+
+
+func coregraphicsReconfiguration(display:CGDirectDisplayID, flags:CGDisplayChangeSummaryFlags, userInfo:UnsafeMutableRawPointer?) -> Void
+{
+    sleep(1)
+    let isUsingIntegrated = GPU.global.IsUsingIntegrated()
+    print(isUsingIntegrated)
+}
+
 @main
 class AppDelegate: NSObject, NSApplicationDelegate {
 
     
-
-
-    func applicationDidFinishLaunching(_ aNotification: Notification) {
-        // Insert code here to initialize your application
+    func applicationDidFinishLaunching(_ aNotification: Notification) {        
+        CGDisplayRegisterReconfigurationCallback(coregraphicsReconfiguration, nil)
     }
-
+    
     func applicationWillTerminate(_ aNotification: Notification) {
-        // Insert code here to tear down your application
+        
     }
-
-
+    
 }
-
