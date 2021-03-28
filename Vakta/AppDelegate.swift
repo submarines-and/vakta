@@ -32,15 +32,17 @@ func onGraphicSwitch(display:CGDirectDisplayID, flags:CGDisplayChangeSummaryFlag
 
 @main
 class AppDelegate: NSObject, NSApplicationDelegate {
-    let statusItem = NSStatusBar.system.statusItem(withLength:NSStatusItem.squareLength)
+   // let statusItem = NSStatusBar.system.statusItem(withLength:NSStatusItem.squareLength)
     
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {        
         CGDisplayRegisterReconfigurationCallback(onGraphicSwitch, nil)
         
+        /*
         if let button = self.statusItem.button {
             button.title = "V"
         }
+        */
     }
     
     func applicationWillTerminate(_ aNotification: Notification) {
