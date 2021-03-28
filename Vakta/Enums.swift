@@ -20,10 +20,11 @@ enum DispatchSelectors: Int {
         kNumberOfMethods
 };
 
-enum GPU_INT: Int {
+enum GPUType: Int {
     case
         Discrete = 0,
-        Integrated
+        Integrated,
+        Error
 }
 
 enum GPUState : Int {

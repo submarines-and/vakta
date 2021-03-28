@@ -9,10 +9,16 @@ import Cocoa
 
 class GPU {
     static var global = GPU()
+    init(){
+        connect();
+        _previous = GetActiveGPU()
+    }
     
     private var _connection: io_connect_t = IO_OBJECT_NULL;
+    private var _previous: GPUType = GPUType.Error;
     
-    init(){
+    
+    func connect() {
         var kernResult: kern_return_t = 0
         var service: io_service_t = IO_OBJECT_NULL
         var iterator: io_iterator_t = 0
@@ -38,15 +44,12 @@ class GPU {
         kernResult = IOConnectCallScalarMethod(self._connection, UInt32(DispatchSelectors.kOpen.rawValue), nil, 0, nil, nil);
     }
     
-      
-    func IsUsingIntegrated() -> Bool {
-        if self._connection == IO_OBJECT_NULL {
-            return false
-        }
-        
-        let gpu_int = GPU_INT(rawValue: Int(getGPUState(connect: self._connection, input: GPUState.GraphicsCard)))
-        
-        return gpu_int == .Integrated
+    
+    
+    
+    func GetActiveGPU() -> GPUType {
+        let type = GPUType(rawValue: Int(getGPUState(connect: self._connection, input: GPUState.GraphicsCard))) ?? GPUType.Error
+        return type
     }
     
     private func getGPUState(connect: io_connect_t, input: GPUState) -> UInt64 {
