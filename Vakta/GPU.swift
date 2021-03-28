@@ -10,49 +10,37 @@ import Cocoa
 class GPU {
     static var global = GPU()
     
+    private var _connection: io_connect_t = IO_OBJECT_NULL;
+    
     init(){
-        connect()
-    }
-    
-    private var _connection: io_connect_t = IO_OBJECT_NULL;    
-    
-    func connect() {
         var kernResult: kern_return_t = 0
         var service: io_service_t = IO_OBJECT_NULL
         var iterator: io_iterator_t = 0
         
         kernResult = IOServiceGetMatchingServices(kIOMasterPortDefault, IOServiceMatching("AppleGraphicsControl"), &iterator);
         
-        if kernResult != KERN_SUCCESS {
-            print("IOServiceGetMatchingServices returned \(kernResult)")
+        if(kernResult != KERN_SUCCESS){
+            return
         }
         
         service = IOIteratorNext(iterator);
         IOObjectRelease(iterator);
         
         if service == IO_OBJECT_NULL {
-            print("No matching drivers found.");
             return
         }
         
         kernResult = IOServiceOpen(service, mach_task_self_, 0, &self._connection);
         if kernResult != KERN_SUCCESS {
-            print("IOServiceOpen returned \(kernResult)");
             return
         }
         
         kernResult = IOConnectCallScalarMethod(self._connection, UInt32(DispatchSelectors.kOpen.rawValue), nil, 0, nil, nil);
-        if kernResult != KERN_SUCCESS {
-            print("IOConnectCallScalarMethod returned \(kernResult)")
-            return
-        }
-        
-        print("Successfully connected")
     }
     
+      
     func IsUsingIntegrated() -> Bool {
         if self._connection == IO_OBJECT_NULL {
-            print("Lost connection to gpu")
             return false
         }
         
