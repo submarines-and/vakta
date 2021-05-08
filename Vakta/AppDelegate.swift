@@ -32,7 +32,7 @@ func onGraphicSwitch(display:CGDirectDisplayID, flags:CGDisplayChangeSummaryFlag
 
 @main
 class AppDelegate: NSObject, NSApplicationDelegate {
-    let statusItem = NSStatusBar.system.statusItem(withLength:NSStatusItem.squareLength)
+    let statusItem = NSStatusBar.system.statusItem(withLength:NSStatusItem.variableLength)
     
     
     // on app load
