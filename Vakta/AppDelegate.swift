@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  Vakta
 //
-//  Created by Johannes Sörensen on 2021-03-28.
+//  Created by submarines on 2021-03-28.
 //
 
 import Cocoa
