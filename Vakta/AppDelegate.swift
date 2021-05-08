@@ -42,6 +42,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if let button = self.statusItem.button {
             let usedGpu = GPU.global.GetActiveGPU()
             button.title = self.getLetterForUsedGpuType(type: usedGpu)
+            button.action = #selector(self.quit(_:))
         }
         
         // register for updating the button text
@@ -76,7 +77,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
     
-    
+    // quit when menu bar icon pressed
+    @objc func quit(_ sender: NSStatusItem) {
+        NSApplication.shared.terminate(self)
+    }
     
     
     // teardown stuff, currently nothing
