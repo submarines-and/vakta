@@ -5,6 +5,8 @@
 //  Created by submarines on 2021-03-28.
 //
 
+import Foundation
+
 enum DispatchSelectors: Int {
     case
         kOpen = 0,
@@ -59,4 +61,9 @@ enum GPUState : Int {
         
         // get: sometimes 0xffffffff, TODO: figure out what that means
         Unknown2                           = 8
+}
+
+
+extension Notification.Name {
+    static let DidGraphicsChange = Notification.Name("DidGraphicsChange")
 }

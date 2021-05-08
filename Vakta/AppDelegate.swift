@@ -13,7 +13,6 @@ func onGraphicSwitch(display:CGDirectDisplayID, flags:CGDisplayChangeSummaryFlag
     let usedGpu = GPU.global.GetActiveGPU()
     
     if(usedGpu == GPUType.Unchanged){
-        print("Card not changed");
         return
     }
     
@@ -27,24 +26,60 @@ func onGraphicSwitch(display:CGDirectDisplayID, flags:CGDisplayChangeSummaryFlag
         message = "Error occured when determining graphics card."
     }
     
+    NotificationCenter.default.post(name: Notification.Name.DidGraphicsChange, object: usedGpu)
     Notifications.global.send(message: message)
 }
 
 @main
 class AppDelegate: NSObject, NSApplicationDelegate {
-   // let statusItem = NSStatusBar.system.statusItem(withLength:NSStatusItem.squareLength)
+    let statusItem = NSStatusBar.system.statusItem(withLength:NSStatusItem.squareLength)
     
     
+    // on app load
     func applicationDidFinishLaunching(_ aNotification: Notification) {        
-        CGDisplayRegisterReconfigurationCallback(onGraphicSwitch, nil)
         
-        /*
+        // set initial button text
         if let button = self.statusItem.button {
-            button.title = "V"
+            let usedGpu = GPU.global.GetActiveGPU()
+            button.title = self.getLetterForUsedGpuType(type: usedGpu)
         }
-        */
+        
+        // register for updating the button text
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(self.graphicsChangedCallback),
+            name: Notification.Name.DidGraphicsChange,
+            object: nil)
+        
+        // register to notify users
+        CGDisplayRegisterReconfigurationCallback(onGraphicSwitch, nil)
     }
     
+    // graphics changed callback that will change the button text
+    @objc private func graphicsChangedCallback(notification: NSNotification){
+        if let type = notification.object as? GPUType {
+            if let button = self.statusItem.button {
+                button.title = self.getLetterForUsedGpuType(type: type)
+            }
+        }
+    }
+    
+    // get I / D / V button text for current used gpu type
+    private func getLetterForUsedGpuType(type: GPUType) -> String {
+        switch type {
+        case GPUType.Integrated:
+            return "I"
+        case GPUType.Discrete:
+            return "D"
+        default:
+            return "V" // ???
+        }
+    }
+    
+    
+    
+    
+    // teardown stuff, currently nothing
     func applicationWillTerminate(_ aNotification: Notification) {
         
     }

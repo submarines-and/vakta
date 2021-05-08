@@ -14,10 +14,10 @@ class Notifications {
         
         center.requestAuthorization(options: [.alert, .badge, .sound]) { (granted, error) in
             if granted {
-                print("Ok")
+               // print("Ok")
             }
             else {
-                print("No")
+              //  print("No")
             }
         }
     }
